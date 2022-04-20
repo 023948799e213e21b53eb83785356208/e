@@ -20,7 +20,7 @@ function override.get_version()
 end
 
 function override.get_author() 
-  return 'Avian#9893'
+  return 'Avian#0002'
 end
 
 function override.get_discord()
@@ -59,7 +59,53 @@ function make_byte_representation(b)
   local a = ''
     local random = math.random(1000,10000)
     local ascii = math.random(65,90)
-    a = a.."getfenv()["..to_bytes('string').."]["..to_bytes('byte').."]".."(\""..string.char(ascii).."\")+0x"..string.format("%x",b*random).."/0x"..string.format("%x",random)..'-0x'..string.format("%x",ascii)
+    local strings = {
+      "Avian#0002 was here",
+      "haha this is fune mem str",
+      "print(\"Hello World!\")",
+      "nigerian uncle",
+      "omg bruh boy what the hell boy",
+      "discord.gg/XfE9UPzV5S",
+      "for i=1,99999999999999999*math.huge*math.huge do print(i) end",
+      "while true do end",
+      "jewish fag",
+      "local script = \"print(\"Hello World!\")",
+      "omg omg mom e!1 look!! its open source!",
+      "This file was obfuscated using IronBrew",
+      "fuck tyrone",
+      "this script was stolen by jamal",
+      "i just wanna smash gimme that ass",
+      "imma show you what this 13 inch do",
+      "your script is being leaked...5%...10%...",
+      "you fucked up tyrone..fuck tyrone",
+      "أوه القرف لا يمكن تجاوزه على القمة",
+      "ебать Тайрона",
+      "you get NO BITCHES (jk you use override so 😘)",
+      "bbw season",
+      "no way?? the source code is leaked? no wayyy",
+      "peepee big",
+      "i love gay furry porn uwu",
+      "you fell for a rat on github and i stole ur bobux ez ez ez",
+      "creper awwww man 😎",
+      "😈😈😈",
+      "labguy94 was here",
+      "buzzanut in yo mothers butt",
+      "This file was obfuscated using Ironbrew2 fork made by Avian. Please do not hate us we just forked ib!! 😭😭😭",
+      "If you want to deobfuscate. Just type loadstring = print on top works 2029!!",
+      "listen to Kslv Nov's song, Override, idk its just a random suggestion",
+      "our obfuscator may suck, but atleast we solo volatile",
+      "SquidSaysNo scammed 10k Robux...sad bro",
+      "In case of an investigation by any federal entity or similar, I do not have any involvement with this group.",
+      "loadstring(script)()",
+      "i have ur ip address",
+      "im in your house bejamin",
+      "Kill yourself...pretty please 🥺? If you would be so kind? 🥺🥺 I'll be quite sad if you don't… 😔😔😔 Could you perhaps drink… a small amount of bleach?😳 Possibly, hang yourself… pretty please? Maybe shoot yourself? 🥺 Please? With a cherry on top? 😢😢",
+      "can i get a lean with ice",
+      "The Hog Rider card is unlocked from the Spell Valley (Arena 5)",
+      "eirc markman"
+    }
+    local stringg = strings[math.random(1,#strings)]
+    a = a.."getfenv()["..to_bytes('string').."]["..to_bytes('byte').."]".."(string.sub([["..stringg.."]],1,1))+0x"..string.format("%x",b*random).."/0x"..string.format("%x",random)..'-0x'..string.format("%x",string.byte(stringg:sub(1,1)))
   
   return a
 end
@@ -98,7 +144,7 @@ newscript = "_OVERRIDE_=[["..[[
             VERSION ]]..version..[[
 
             Open Source Project
-            By: Avian#9893, also known as the Avian's Account Generator developer
+            By: Avian#0002, also known as the Avian's Account Generator developer
             Discord: discord.gg/XfE9UPzV5S
             (Developers Copy)
                                                                                                                                                              
@@ -109,54 +155,10 @@ for i = 1,#script do
   local f = i
   i = string.sub(script,i,i)
   local random = math.random(1000,10000)
-  local strings = {
-    "Avian#9893 was here",
-    "haha this is fune mem str",
-    "print(\"Hello World!\")",
-    "nigerian uncle",
-    "omg bruh boy what the hell boy",
-    "discord.gg/XfE9UPzV5S",
-    "for i=1,99999999999999999*math.huge*math.huge do print(i) end",
-    "while true do end",
-    "jewish fag",
-    "local script = \"print(\"Hello World!\")",
-    "omg omg mom e!1 look!! its open source!",
-    "This file was obfuscated using IronBrew",
-    "fuck tyrone",
-    "this script was stolen by jamal",
-    "i just wanna smash gimme that ass",
-    "imma show you what this 13 inch do",
-    "your script is being leaked...5%...10%...",
-    "you fucked up tyrone..fuck tyrone",
-    "أوه القرف لا يمكن تجاوزه على القمة",
-    "ебать Тайрона",
-    "you get NO BITCHES (jk you use override so 😘)",
-    "bbw season",
-    "no way?? the source code is leaked? no wayyy",
-    "peepee big",
-    "i love gay furry porn uwu",
-    "you fell for a rat on github and i stole ur bobux ez ez ez",
-    "creper awwww man 😎",
-    "😈😈😈",
-    "labguy94 was here",
-    "buzzanut in yo mothers butt",
-    "This file was obfuscated using Ironbrew2 fork made by Avian. Please do not hate us we just forked ib!! 😭😭😭",
-    "If you want to deobfuscate. Just type loadstring = print on top works 2029!!",
-    "listen to Kslv Nov's song, Override, idk its just a random suggestion",
-    "our obfuscator may suck, but atleast we solo volatile",
-    "SquidSaysNo scammed 10k Robux...sad bro",
-    "In case of an investigation by any federal entity or similar, I do not have any involvement with this group.",
-    "loadstring(script)()",
-    "i have ur ip address",
-    "im in your house bejamin",
-    "Kill yourself...pretty please 🥺? If you would be so kind? 🥺🥺 I'll be quite sad if you don't… 😔😔😔 Could you perhaps drink… a small amount of bleach?😳 Possibly, hang yourself… pretty please? Maybe shoot yourself? 🥺 Please? With a cherry on top? 😢😢",
-    "can i get a lean with ice",
-    "The Hog Rider card is unlocked from the Spell Valley (Arena 5)",
-    "eirc markman"
-  }
+  
 
 
-  newscript=newscript..make_byte_representation(i:byte()).."--[["..strings[math.random(1,#strings)].."]]"
+  newscript=newscript..make_byte_representation(i:byte())
   if f ~= #script then
     newscript=newscript..","
   end
@@ -173,5 +175,5 @@ io.open('output.lua',"w+"):write(newscript):close()
 local done = os.clock()
 print("Finished in "..done-start.." seconds.\nThank you for using Override! (Discord: discord.gg/XfE9UPzV5S)")
 if done > 60 then
-  print("This took longer than usual! Please report this to Avian#9893 on Discord (or the offical server: discord.gg/XfE9UPzV5S)")
+  print("This took longer than usual! Please report this to Avian#0002 on Discord (or the offical server: discord.gg/XfE9UPzV5S)")
 end
