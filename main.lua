@@ -2,8 +2,11 @@
 local start = os.clock()
 print("Started the obfuscation procedure, this may take longer for large scripts and or low-end pcs.")
 
+local options = {
+  ["Anti-Beautify"] = true
+}
 
-local version = "0.0.6"
+local version = "0.0.7"
 
 --Reading the script
 local script = io.open('input.lua','r'):read("*all")
@@ -16,7 +19,7 @@ if getfenv()['_obfuscated_by_overrideobfuscator'] == nil then return error('give
 local override = {}
 
 function override.get_version() 
-  return '0.0.6'
+  return '0.0.7'
 end
 
 function override.get_author() 
@@ -105,7 +108,7 @@ function make_byte_representation(b)
       "eirc markman"
     }
     local stringg = strings[math.random(1,#strings)]
-    a = a.."getfenv()["..to_bytes('string').."]["..to_bytes('byte').."]".."(string.sub([["..stringg.."]],1,1))+0x"..string.format("%x",b*random).."/0x"..string.format("%x",random)..'-0x'..string.format("%x",string.byte(stringg:sub(1,1)))
+    a = a.."(({...})[1])()["..to_bytes('string').."]["..to_bytes('byte').."](".."(({...})[1])()["..to_bytes('string').."]["..to_bytes('sub').."]([["..stringg.."]],1,1))+0x"..string.format("%x",b*random).."/0x"..string.format("%x",random)..'-0x'..string.format("%x",string.byte(stringg:sub(1,1)))
   
   return a
 end
@@ -123,15 +126,17 @@ end
 
 --Random variable names
 local random_unpack = random_name(100)
-local random_s = random_name(100)
-local random_f = random_name(100)
-local random_t = random_name(100)
-local random_i = random_name(100)
-local random_ls = random_name(100)
-local random_v = random_name(100)
+local random_s = random_name(10000)
+local random_f = random_name(10000)
+local random_t = random_name(10000)
+local random_i = random_name(10000)
+local random_ls = random_name(10000)
+local random_v = random_name(10000)
+local antibeautifyI = random_name(10000)
+local antibeautifyII = random_name(10000)
 
 --Starting script
-local newscript = "_obfuscated_by_overrideobfuscator='discord.gg/XfE9UPzV5S';_indev_version=\"0.0.6\";return (function() function "..random_unpack.."("..random_t..") "..random_s.." = '' for "..random_i..","..random_v.." in pairs("..random_t..") do  "..random_s.." = "..random_s.."..getfenv()["..to_bytes("string").."]["..to_bytes("char").."]("..random_v..") end return ".."getfenv()["..to_bytes(random_s).."] end; "..random_f.." = {"
+local newscript = "_obfuscated_by_overrideobfuscator='discord.gg/XfE9UPzV5S';_indev_version=\"0.0.6\";return (function(...) function "..random_unpack.."("..random_t..",...) "..random_s.." = '' for "..random_i..","..random_v.." in pairs("..random_t..") do  "..random_s.." = "..random_s.."..(({...})[1])()["..to_bytes("string").."]["..to_bytes("char").."]("..random_v..") end return ".."(({...})[1])()["..to_bytes(random_s).."] end; "..random_f.." = {"
 
 newscript = "_OVERRIDE_=[["..[[
 
@@ -164,9 +169,12 @@ for i = 1,#script do
   end
 end
 
-
+newscript = newscript.."};"
 --Ending script
-newscript = newscript.."}; if getfenv()["..to_bytes('loadstring').."] == getfenv()["..to_bytes('print').. "] then return end if getfenv()["..to_bytes('loadstring').."] == getfenv()["..to_bytes("warn").."]".." then return end if getfenv()["..to_bytes('loadstring').."] == getfenv()["..to_bytes("error").."] then return end return getfenv()['\\108\\111\\97\\100\\115\\116\\114\\105\\110\\103'](getfenv()["..to_bytes(random_unpack).."]("..random_f..")) end)()()\n"
+if options["Anti-Beautify"] then
+  newscript = newscript.."pcall(function() local "..antibeautifyI.."="..antibeautifyII.." "..antibeautifyI.."*=-1 end)"
+end
+newscript=newscript.." if (({...})[1])()["..to_bytes('loadstring').."] == (({...})[1])()["..to_bytes('print').. "] then return end if (({...})[1])()["..to_bytes('loadstring').."] == (({...})[1])()["..to_bytes("warn").."]".." then return end if (({...})[1])()["..to_bytes('loadstring').."] == (({...})[1])()["..to_bytes("error").."] then return end return (({...})[1])()['\\108\\111\\97\\100\\115\\116\\114\\105\\110\\103']((({...})[1])()["..to_bytes(random_unpack).."]("..random_f..",...)) end)(getfenv)()\n"
 
 --Editing the output file
 io.open('output.lua',"w+"):write(newscript):close()
