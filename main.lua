@@ -6,20 +6,21 @@ local options = {
   ["Anti-Beautify"] = true
 }
 
-local version = "0.0.7"
+local version = "0.0.8"
 
 --Reading the script
 local script = io.open('input.lua','r'):read("*all")
 
+local variable_names = {}
+
 --Adding credit protection
 script = [[
-
 if getfenv()['_obfuscated_by_overrideobfuscator'] == nil then return error('give me some credit, damn (Case: 1)') end if getfenv()["_OVERRIDE_"] == nil then return error('give me some credit, damn (Case: 3)') end
 
 local override = {}
 
 function override.get_version() 
-  return '0.0.7'
+  return "]]..version..[["
 end
 
 function override.get_author() 
@@ -40,11 +41,21 @@ end
 
 ]]..script
 
-
+function toBits(num)
+  -- returns a table of bits, least significant first.
+  local t={} -- will contain the bits
+  while num>0 do
+      local rest=math.fmod(num,2)
+      t[#t+1]=rest
+      num=(num-rest)/2
+  end
+  return table.concat(t,"")
+end
 
 --Random Variable Name Generator (Example: IlIlllII)
 function random_name(length) 
-  local s = ''
+  local s = 'OverrideBest_'
+  while true do
   for i=1,length do
     if math.random(1,2) == 1 then
       s=s.."I"
@@ -52,62 +63,67 @@ function random_name(length)
       s=s.."l"
     end
   end
+  if variable_names[s] == nil then
+    variable_names[s] = true
+    break
+  end
+end
   return s
 end
 
 
+local list_arabic={"ا","ب","ت","ث","ج","ح","خ","د","ذ","ر","ز","س","ش","ص","ض","ط","ظ","ع","غ","ف","ق","ك","ل","م","ن","ه","و","ي"}
+local list_random = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"}
+local list_russian = {"а","б","в","г","д","е","ё","ж","з","и","й","к","л","м","н","о","п","р","с","т","у","ф","х","ц","ч","ш","щ","ъ","ы","ь","э","ю","я"}
+local emojis = {"😀","😃","😄","😁","😆","😅","😂","🤣","😊","😇","🙂","🙃","😉","😌","😍","🥰","😘","😗","😙","😚","😋","😛","😝","😜","🤪","🤨","🧐","🤓","😎","🥸","🤩","🥳","😏","😒","😞","😔","😟","😕","🙁","☹️","😣","😖","😫","😩","🥺","😢","😭","😤","😠","😡","🤬","🤯","😳","🥵","🥶","😱","😨","😰","😥","😓","🤗","🤔","🤭","🤫","🤥","😶","😐","😑","😬","🙄","😯","😦","😧","😮","😲","🥱","😴","🤤","😪","😵","🤐","🥴"}
+local all_together = {}
+for i=1,#list_arabic do
+  all_together[#all_together+1] = list_arabic[i]
+end
+for i=1,#list_random do
+  all_together[#all_together+1] = list_random[i]
+end
+for i=1,#list_russian do
+  all_together[#all_together+1] = list_russian[i]
+end
+for i=1,#emojis do
+  all_together[#all_together+1] = emojis[i]
+end
+
+function random_string(length,rig)
+  local a = '"'
+
+  local list_rand = rig or math.random(1,5)
+  
+  local list_to_use = {}
+
+  if list_rand == 1 then list_to_use = list_arabic end
+  if list_rand == 2 then list_to_use = list_random end
+  if list_rand == 3 then list_to_use = list_russian end
+  if list_rand == 4 then list_to_use = all_together end
+  if list_rand == 5 then list_to_use = emojis end
+
+  
+  for i=1,length do
+    a=a..list_to_use[math.random(1,#list_to_use)]
+  end
+  return a..'"'
+end
 
 --Turns bytes into a slightly protected string
 function make_byte_representation(b)
-  local a = ''
+  
+    local a = ''
     local random = math.random(1000,10000)
     local ascii = math.random(65,90)
-    local strings = {
-      "Avian#0002 was here",
-      "haha this is fune mem str",
-      "print(\"Hello World!\")",
-      "nigerian uncle",
-      "omg bruh boy what the hell boy",
-      "discord.gg/XfE9UPzV5S",
-      "for i=1,99999999999999999*math.huge*math.huge do print(i) end",
-      "while true do end",
-      "jewish fag",
-      "local script = \"print(\"Hello World!\")",
-      "omg omg mom e!1 look!! its open source!",
-      "This file was obfuscated using IronBrew",
-      "fuck tyrone",
-      "this script was stolen by jamal",
-      "i just wanna smash gimme that ass",
-      "imma show you what this 13 inch do",
-      "your script is being leaked...5%...10%...",
-      "you fucked up tyrone..fuck tyrone",
-      "أوه القرف لا يمكن تجاوزه على القمة",
-      "ебать Тайрона",
-      "you get NO BITCHES (jk you use override so 😘)",
-      "bbw season",
-      "no way?? the source code is leaked? no wayyy",
-      "peepee big",
-      "i love gay furry porn uwu",
-      "you fell for a rat on github and i stole ur bobux ez ez ez",
-      "creper awwww man 😎",
-      "😈😈😈",
-      "labguy94 was here",
-      "buzzanut in yo mothers butt",
-      "This file was obfuscated using Ironbrew2 fork made by Avian. Please do not hate us we just forked ib!! 😭😭😭",
-      "If you want to deobfuscate. Just type loadstring = print on top works 2029!!",
-      "listen to Kslv Nov's song, Override, idk its just a random suggestion",
-      "our obfuscator may suck, but atleast we solo volatile",
-      "SquidSaysNo scammed 10k Robux...sad bro",
-      "In case of an investigation by any federal entity or similar, I do not have any involvement with this group.",
-      "loadstring(script)()",
-      "i have ur ip address",
-      "im in your house bejamin",
-      "Kill yourself...pretty please 🥺? If you would be so kind? 🥺🥺 I'll be quite sad if you don't… 😔😔😔 Could you perhaps drink… a small amount of bleach?😳 Possibly, hang yourself… pretty please? Maybe shoot yourself? 🥺 Please? With a cherry on top? 😢😢",
-      "can i get a lean with ice",
-      "The Hog Rider card is unlocked from the Spell Valley (Arena 5)",
-      "eirc markman"
-    }
+    local strings = {}
+    for line in io.open("memestrings.txt",'r'):lines() do
+      table.insert(strings,line)
+    end    
     local stringg = strings[math.random(1,#strings)]
+    if math.random(1,2) == 2 then
+      stringg = random_string(10)
+    end
     a = a.."(({...})[1])()["..to_bytes('string').."]["..to_bytes('byte').."](".."(({...})[1])()["..to_bytes('string').."]["..to_bytes('sub').."]([["..stringg.."]],1,1))+0x"..string.format("%x",b*random).."/0x"..string.format("%x",random)..'-0x'..string.format("%x",string.byte(stringg:sub(1,1)))
   
   return a
@@ -125,18 +141,29 @@ function to_bytes(word)
 end
 
 --Random variable names
-local random_unpack = random_name(100)
-local random_s = random_name(10000)
-local random_f = random_name(10000)
-local random_t = random_name(10000)
-local random_i = random_name(10000)
-local random_ls = random_name(10000)
-local random_v = random_name(10000)
-local antibeautifyI = random_name(10000)
-local antibeautifyII = random_name(10000)
+local random_unpack = random_name(20)
+local random_s = random_name(20)
+local random_f = random_name(20)
+local random_t = random_name(20)
+local random_i = random_name(20)
+local random_v = random_name(20)
+local antibeautifyI = random_name(20)
+local antibeautifyII = random_name(20)
+local largerandstring = random_string(100000,4)
 
 --Starting script
-local newscript = "_obfuscated_by_overrideobfuscator='discord.gg/XfE9UPzV5S';_indev_version=\"0.0.6\";return (function(...) function "..random_unpack.."("..random_t..",...) "..random_s.." = '' for "..random_i..","..random_v.." in pairs("..random_t..") do  "..random_s.." = "..random_s.."..(({...})[1])()["..to_bytes("string").."]["..to_bytes("char").."]("..random_v..") end return ".."(({...})[1])()["..to_bytes(random_s).."] end; "..random_f.." = {"
+
+local newscript = "_obfuscated_by_overrideobfuscator='discord.gg/XfE9UPzV5S';_indev_version=\""..version.."\";if getfenv == nil then return error(\"You can only use this on lua that supports getfenv (Roblox or LuaU)\") end; return (function(...) function "..random_unpack.."("..random_t..",...) "..random_s.." = '' for "..random_i..","..random_v.." in pairs("..random_t..") do  "..random_s.." = "..random_s.."..(({...})[1])()["..to_bytes("string").."]["..to_bytes("char").."]("..random_v..") end return ".."(({...})[1])()["..to_bytes(random_s).."] end; "
+
+function random_stuff()
+  for i = 1,math.random(500,1000) do
+    newscript=newscript..random_name(math.random(20,30)).."="..random_string(math.random(50,100))
+  end
+end
+
+random_stuff()
+
+newscript = newscript..random_f.." = {"
 
 newscript = "_OVERRIDE_=[["..[[
 
@@ -151,7 +178,6 @@ newscript = "_OVERRIDE_=[["..[[
             Open Source Project
             By: Avian#0002, also known as the Avian's Account Generator developer
             Discord: discord.gg/XfE9UPzV5S
-            (Developers Copy)
                                                                                                                                                              
 ]].."]]\n"..newscript
 
@@ -172,9 +198,12 @@ end
 newscript = newscript.."};"
 --Ending script
 if options["Anti-Beautify"] then
-  newscript = newscript.."pcall(function() local "..antibeautifyI.."="..antibeautifyII.." "..antibeautifyI.."*=-1 end)"
+  newscript = newscript.."function "..random_name(20).."()pcall(function()local "..antibeautifyI.."="..antibeautifyII.." "..antibeautifyI.."*=-1; end) end "
 end
-newscript=newscript.." if (({...})[1])()["..to_bytes('loadstring').."] == (({...})[1])()["..to_bytes('print').. "] then return end if (({...})[1])()["..to_bytes('loadstring').."] == (({...})[1])()["..to_bytes("warn").."]".." then return end if (({...})[1])()["..to_bytes('loadstring').."] == (({...})[1])()["..to_bytes("error").."] then return end return (({...})[1])()['\\108\\111\\97\\100\\115\\116\\114\\105\\110\\103']((({...})[1])()["..to_bytes(random_unpack).."]("..random_f..",...)) end)(getfenv)()\n"
+random_stuff()
+newscript=newscript.." if(({...})[1])()["..to_bytes('loadstring').."]==(({...})[1])()["..to_bytes('print').. "]then return end;if rawequal((({...})[1])()["..to_bytes('loadstring').."],(({...})[1])()["..to_bytes("warn").."])".."then return end;if rawequal((({...})[1])()["..to_bytes('loadstring').."],(({...})[1])()["..to_bytes("error").."])then return end;"
+
+newscript=newscript.."return(({...})[1])()['\\108\\111\\97\\100\\115\\116\\114\\105\\110\\103']((({...})[1])()["..to_bytes(random_unpack).."]("..random_f..",...)) end)(getfenv,"..largerandstring..")()\n"
 
 --Editing the output file
 io.open('output.lua',"w+"):write(newscript):close()
