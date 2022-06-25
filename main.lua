@@ -16,29 +16,22 @@ local variable_names = {}
 --Adding credit protection
 script = [[
 if getfenv()['_obfuscated_by_overrideobfuscator'] == nil then return error('give me some credit, damn (Case: 1)') end if getfenv()["_OVERRIDE_"] == nil then return error('give me some credit, damn (Case: 3)') end
-
 local override = {}
-
 function override.get_version() 
   return "]]..version..[["
 end
-
 function override.get_author() 
   return 'Avian#0002'
 end
-
 function override.get_discord()
   return 'discord.gg/XfE9UPzV5S'
 end
-
 function override.print(msg)
   print('[OVERRIDE PRINT]: '..msg)
 end
-
 function override.get_message()
   return 'Thank you for using Override! This honestly means a lot <3'
 end
-
 ]]..script
 
 function toBits(num)
@@ -166,7 +159,6 @@ random_stuff()
 newscript = newscript..random_f.." = {"
 
 newscript = "_OVERRIDE_=[["..[[
-
   ____                            _      _                       
  / __ \                          (_)    | |                   
 | |  | |__   __  ___  _ __  _ __  _   __| |  ___ 
@@ -174,7 +166,6 @@ newscript = "_OVERRIDE_=[["..[[
 | |__| | \ V / |  __/| |   | |   | || (_| ||  __/
  \____/   \_/   \___||_|   |_|   |_| \__,_| \___| 
             VERSION ]]..version..[[
-
             Open Source Project
             By: Avian#0002, also known as the Avian's Account Generator developer
             Discord: discord.gg/XfE9UPzV5S
@@ -206,7 +197,7 @@ newscript=newscript.." if(({...})[1])()["..to_bytes('loadstring').."]==(({...})[
 newscript=newscript.."return(({...})[1])()['\\108\\111\\97\\100\\115\\116\\114\\105\\110\\103']((({...})[1])()["..to_bytes(random_unpack).."]("..random_f..",...)) end)(getfenv,"..largerandstring..")()\n"
 
 --Editing the output file
-io.open('output.lua',"w+"):write(newscript):close()
+io.open('output.lua',"w+"):write(newscript)
 
 --Ending Clock and Printing Time
 local done = os.clock()
